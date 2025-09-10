@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WhatsApp Lead Catcher — Dubai • Early Access</title>
+  <meta name="description" content="Turn WhatsApp messages into leads automatically. Capture contact info, set callback reminders, and never miss a follow-up." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#11162a;
+      --muted:#9AA3B2;
+      --text:#e9edf7;
+      --brand:#4f8cff;
+      --brand-2:#7ce0ff;
+      --ok:#12b886;
+      --err:#ff6b6b;
+      --ring: 0 0 0 4px rgba(79,140,255,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 85% -10%, rgba(124,224,255,.15), transparent 60%),
+                  radial-gradient(900px 500px at -10% 10%, rgba(79,140,255,.18), transparent 60%), var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:4px 0 8px;
+    }
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .logo-badge{width:34px;height:34px;border-radius:10px;background:
+      linear-gradient(135deg, var(--brand), var(--brand-2));display:grid;place-items:center;
+      color:#061126;font-weight:900}
+    .nav a{margin:0 8px;color:var(--muted)}
+    .cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#061126;border:0;border-radius:14px;padding:12px 18px;font-weight:700;cursor:pointer;transition:.2s transform}
+    .cta:hover{transform:translateY(-1px)}
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center;padding:40px 0}
+    .hero h1{font-size: clamp(28px, 4.5vw, 48px);line-height:1.05;margin:0 0 14px}
+    .hero p{color:var(--muted);font-size: clamp(14px, 2vw, 18px)}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(124,224,255,.12);border:1px solid rgba(124,224,255,.3);
+      color:#bfeeff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.2px}
+    .card{background:rgba(255,255,255,.02);backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;padding:18px}
+    .demo{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px dashed rgba(255,255,255,.2);
+      min-height:320px;border-radius:18px;display:grid;place-items:center;text-align:center;padding:24px
+    }
+    .demo h3{margin:10px 0 6px}
+    .demo small{color:var(--muted)}
+    .stack{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .stack .mini{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px}
+    .mini b{display:block}
+    .form-wrap{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px}
+    .form h3{margin:0 0 10px}
+    label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+    input,select,button,textarea{
+      width:100%;padding:12px 13px;border-radius:12px;background:#0a0f20;border:1px solid rgba(255,255,255,.12);
+      color:var(--text);font:inherit
+    }
+    input:focus,select:focus,textarea:focus{outline:none;box-shadow:var(--ring);border-color:var(--brand)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .disclaimer{color:var(--muted);font-size:12px;margin-top:8px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+    .feature{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px}
+    .feature b{display:block;margin-bottom:6px}
+    .badge{display:inline-block;background:rgba(18,184,134,.2);border:1px solid rgba(18,184,134,.5);color:#b7ffe8;
+      font-size:12px;padding:4px 8px;border-radius:999px}
+    .success,.error{display:none;margin-top:12px;padding:12px;border-radius:12px}
+    .success{background:rgba(18,184,134,.1);border:1px solid rgba(18,184,134,.4);color:#c3ffe9}
+    .error{background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.5);color:#ffd0d0}
+    footer{border-top:1px solid rgba(255,255,255,.08);margin-top:28px;padding:22px 0;color:var(--muted);font-size:14px}
+    @media (max-width: 940px){
+      .hero{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr;gap:12px}
+      .stack{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-badge">WA</div>
+        <div>WhatsApp Lead Catcher</div>
+      </div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#early">Early Access</a>
+      </nav>
+      <button class="cta" onclick="document.querySelector('#email').focus()">Get Early Access</button>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="pill">Dubai Businesses • Early Access</span>
+        <h1>Turn WhatsApp Messages into Paying Customers — Automatically</h1>
+        <p>A simple tool for Dubai businesses that captures every WhatsApp inquiry, logs it in a dashboard, and reminds your team to follow up on time.</p>
+        <div class="features" id="features">
+          <div class="feature"><b>Auto-capture</b><span>Short form link for WhatsApp: name, number, request — all saved with a timestamp.</span></div>
+          <div class="feature"><b>Smart reminders</b><span>Assign callback dates/times and get notified so no lead slips away.</span></div>
+          <div class="feature"><b>Clean dashboard</b><span>Search, filter, and export leads. Share access with your team.</span></div>
+        </div>
+        <div class="badge">No credit card • Limited beta seats</div>
+      </div>
+      <div class="card form-wrap" id="early">
+        <div class="form">
+          <h3>Get early access</h3>
+          <p class="disclaimer">Join the waitlist. We’ll email you your invite and onboarding.</p>
+          <form id="lead-form" data-endpoint="" novalidate>
+            <div class="row">
+              <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" placeholder="Ayesha Khan" required />
+              </div>
+              <div>
+                <label for="email">Work email</label>
+                <input id="email" name="email" type="email" placeholder="ayesha@company.ae" required />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="phone">Phone / WhatsApp</label>
+                <input id="phone" name="phone" placeholder="+971 5x xxx xxxx" />
+              </div>
+              <div>
+                <label for="company">Company</label>
+                <input id="company" name="company" placeholder="Clean & Shine Dubai" />
+              </div>
+            </div>
+            <label for="use">Main use-case</label>
+            <select id="use" name="use">
+              <option value="cleaning">Cleaning services</option>
+              <option value="home-services">Home services</option>
+              <option value="repairs">Repairs & maintenance</option>
+              <option value="salon">Salon & beauty</option>
+              <option value="other">Other</option>
+            </select>
+            <input type="hidden" id="utm_source" name="utm_source" />
+            <input type="hidden" id="utm_medium" name="utm_medium" />
+            <input type="hidden" id="utm_campaign" name="utm_campaign" />
+            <input type="hidden" id="utm_content" name="utm_content" />
+            <button id="submitBtn" class="cta" type="submit" style="width:100%;justify-content:center;margin-top:12px">Join Waitlist</button>
+            <div class="success" id="success">✅ Thanks! Check your email for a confirmation.</div>
+            <div class="error" id="error">⚠️ Something went wrong. Please try again or email hello@example.com.</div>
+            <p class="disclaimer">By joining, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>. We’ll never sell your data.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="card demo">
+        <div>
+          <span class="pill">How it works</span>
+          <h3>WhatsApp → Short Form → Dashboard → Callback</h3>
+          <p>Share your short form link in your WhatsApp replies. When customers fill it, we auto-log the lead and schedule a reminder for your team.</p>
+          <div class="stack">
+            <div class="mini"><b>1) Share form link</b><small>Reply on WhatsApp with your lead form link.</small></div>
+            <div class="mini"><b>2) Auto-log</b><small>We save name, phone, request, and preferred callback time.</small></div>
+            <div class="mini"><b>3) Follow up</b><small>Dashboard + reminders ensure you never miss a lead.</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> WhatsApp Lead Catcher • Built for Dubai businesses. Need help? <a href="mailto:hello@example.com">hello@example.com</a>
+    </footer>
+  </div>
+
+<script>
+// Utilities
+const params = new URLSearchParams(window.location.search);
+["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k=>{
+  const v = params.get(k);
+  if(v) { document.getElementById(k).value = v; }
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function validateEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+const form = document.getElementById('lead-form');
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const success = document.getElementById('success');
+  const error = document.getElementById('error');
+  success.style.display = 'none';
+  error.style.display = 'none';
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const company = document.getElementById('company').value.trim();
+  const use = document.getElementById('use').value;
+
+  if(!name || !email || !validateEmail(email)){
+    error.textContent = "⚠️ Please enter a valid name and email.";
+    error.style.display = 'block';
+    return;
+  }
+
+  const payload = {
+    name, email, phone, company, use,
+    utm_source: document.getElementById('utm_source').value,
+    utm_medium: document.getElementById('utm_medium').value,
+    utm_campaign: document.getElementById('utm_campaign').value,
+    utm_content: document.getElementById('utm_content').value,
+    page: location.href,
+    ts: new Date().toISOString()
+  };
+
+  btn.disabled = true;
+  btn.textContent = "Submitting…";
+  const endpoint = form.dataset.endpoint?.trim();
+
+  try{
+    if(endpoint){
+      const resp = await fetch(endpoint, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(payload)
+      });
+      if(!resp.ok) throw new Error("Network response was not ok");
+    }else{
+      const leads = JSON.parse(localStorage.getItem("wlc_leads")||"[]");
+      leads.push(payload);
+      localStorage.setItem("wlc_leads", JSON.stringify(leads));
+      const subject = encodeURIComponent("New Early Access Lead");
+      const body = encodeURIComponent(Object.entries(payload).map(([k,v])=>`${k}: ${v}`).join("\n"));
+      window.location.href = `mailto:hello@example.com?subject=${subject}&body=${body}`;
+    }
+    success.style.display = 'block';
+    form.reset();
+  }catch(err){
+    console.error(err);
+    error.textContent = "⚠️ Submission failed. Check your internet or endpoint URL and try again.";
+    error.style.display = 'block';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Join Waitlist";
+  }
+});
+</script>
+</body>
+</html>
